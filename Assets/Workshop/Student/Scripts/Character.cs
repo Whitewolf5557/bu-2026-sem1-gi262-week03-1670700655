@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
@@ -19,6 +20,16 @@ public class Character : Identity
 
         if(HasPlacement(toX, toY))
         {
+            if (IsExit(toX, toY))
+            {
+                positionX = toX;
+                positionY = toY;
+                transform.position = new Vector2(positionX, positionY);
+
+                Debug.Log("You Win");
+                GameManager.Instance.WinGame();
+            }
+            
             if(IsPotion(toX, toY))
             {
                 mapGenerator.potions[toX, toY].Hit();
@@ -113,9 +124,8 @@ public class Character : Identity
 
     public bool IsExit(int x, int y)
     {
-        // int mapData = mapGenerator.GetMapData(x, y);
-        // return mapData == mapGenerator.exit;
-        return false;
+        var mapData = mapGenerator.GetMapData(x, y);
+        return mapData == mapGenerator.exit;
     }
 
     #endregion
