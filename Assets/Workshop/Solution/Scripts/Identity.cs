@@ -21,7 +21,7 @@ namespace Solution
 
         public virtual void Hit()
         {
-
+            Debug.Log("Hit");
         }
     }
 }
